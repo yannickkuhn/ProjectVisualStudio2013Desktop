@@ -13,5 +13,35 @@ namespace Pam.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public PartialViewResult FaireSimulation()
+        {
+            return PartialView("Simulation");
+        }
+
+        [HttpPost]
+        public PartialViewResult EnregistrerSimulation()
+        {
+            return PartialView("Simulations");
+        }
+
+        [HttpPost]
+        public PartialViewResult VoirSimulations()
+        {
+            return PartialView("Simulations");
+        }
+
+        [HttpPost]
+        public PartialViewResult Formulaire()
+        {
+            return PartialView("Formulaire");
+        }
+
+        [HttpPost]
+        public PartialViewResult TerminerSession()
+        {
+            return PartialView("Formulaire");
+        }
     }
 }
