@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pam.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,9 @@ namespace Pam.Controllers
     public class PamController : Controller
     {
         [HttpGet]
-        public ViewResult Index()
+        public ViewResult Index(ApplicationModel application)
         {
-            return View();
+            return View(new IndexModel() { Application = application });
         }
 
         [HttpPost]

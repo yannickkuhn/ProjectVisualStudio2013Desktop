@@ -2,6 +2,13 @@
 var loading;
 var content;
 function faireSimulation() {
+    // d'abord les références sur le DOM
+    var formulaire = $("#formulaire");
+    // ensuite validation du formulaire
+    if (!formulaire.validate().form()) {
+        // formulaire invalide - terminé
+        return;
+    }
     // on fait un appel Ajax à la main
     $.ajax({
         url: '/Pam/FaireSimulation',
@@ -103,6 +110,7 @@ function setMenu(show) {
 
 // au chargement du document
 $(document).ready(function () {
+
     // on récupère les références des différents composants de la page
     loading = $("#loading");
     content = $("#content");
@@ -120,4 +128,5 @@ $(document).ready(function () {
     loading.hide();
     // on fixe le menu
     setMenu([lnkFaireSimulation, lnkVoirSimulations, lnkTerminerSession]);
+
 });
