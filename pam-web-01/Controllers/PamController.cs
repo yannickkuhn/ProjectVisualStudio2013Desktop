@@ -1,4 +1,6 @@
-﻿using Pam.Models;
+﻿using Pam.Metier.Entites;
+using Pam.Models;
+using PamWeb.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +18,40 @@ namespace Pam.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult FaireSimulation()
+        public PartialViewResult FaireSimulation(FormCollection postedData, ApplicationModel application)
         {
-            return PartialView("Simulation");
+            FeuilleSalaire feuilleSalaire = null;
+            Exception exception = null;
+            try
+            {
+                // création du modèle de l'action
+                IndexModel modèle = new IndexModel() { Application = application };
+                // récupération des valeurs postées dans ce modèle
+                TryUpdateModel(modèle, postedData);
+                // gestion des erreurs
+                if (!ModelState.IsValid)
+                {
+                    // on retourne les erreurs
+                    return PartialView("Erreurs", Static.GetErreursForModel(ModelState));
+                }
+                // calcul salaire
+                feuilleSalaire = application.PamMetier.GetSalaire(modèle.SS, modèle.HeuresTravaillées, Convert.ToInt32(modèle.JoursTravaillés));
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            if (exception == null)
+            {
+                // on affiche la feuille de salaire
+                return PartialView("Simulation", feuilleSalaire);
+            }
+            else
+            {
+                return PartialView("Erreurs", Static.GetErreursForException(exception));
+            }
+            
         }
 
         [HttpPost]

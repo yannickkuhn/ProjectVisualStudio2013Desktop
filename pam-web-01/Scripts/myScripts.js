@@ -13,14 +13,27 @@ function faireSimulation() {
     $.ajax({
         url: '/Pam/FaireSimulation',
         type: 'POST',
+        data: formulaire.serialize(),
         dataType: 'html',
-        begin: loading.show(),
+        beforeSend: function() {
+            loading.show();
+        },
         success: function (data) {
             loading.hide();
             simulation.html(data);
-            setMenu([lnkEffacerSimulation, lnkVoirSimulations, lnkEnregistrerSimulation, lnkTerminerSession]);
+        },
+        error: function (jqXHR) {
+            // affichage erreur
+            simulation.html(jqXHR.responseText);
+            simulation.show();
+        },
+        complete: function () {
+            // signal d'attente éteint
+            loading.hide();
         }
-    })
+    });
+    // menu
+    setMenu([lnkEffacerSimulation, lnkVoirSimulations, lnkEnregistrerSimulation, lnkTerminerSession]);
 }
 function effacerSimulation() {
     // on efface les saisies du formulaire

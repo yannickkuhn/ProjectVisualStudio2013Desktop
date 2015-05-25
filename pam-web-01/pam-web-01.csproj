@@ -131,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ApplicationModelBinder.cs" />
+    <Compile Include="Infrastructure\Static.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Pam\Index.cshtml" />
     <Content Include="Views\Pam\Simulations.cshtml" />
+    <Content Include="Views\Pam\Erreurs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
