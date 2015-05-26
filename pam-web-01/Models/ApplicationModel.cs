@@ -15,5 +15,6 @@ namespace Pam.Models
         public Employe[] Employes { get; set; }
         public IPamMetier PamMetier { get; set; }
         public SelectListItem[] EmployesItems { get; set; }
+        public Exception InitException { get; set; }
     }
 }

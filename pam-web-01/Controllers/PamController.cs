@@ -4,6 +4,7 @@ using PamWeb.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,18 +15,27 @@ namespace Pam.Controllers
         [HttpGet]
         public ViewResult Index(ApplicationModel application)
         {
+            // erreur d'initialisation ?
+            //if (application.InitException != null)
+            //{
+                // page d'erreurs sans menu
+            //    return View("InitFailed", Static.GetErreursForException(application.InitException));
+            //}
+            // pas d'erreur
             return View(new IndexModel() { Application = application });
         }
 
         [HttpPost]
-        public PartialViewResult FaireSimulation(FormCollection postedData, ApplicationModel application)
+        public PartialViewResult FaireSimulation(FormCollection postedData, ApplicationModel application, SessionModel session)
         {
             FeuilleSalaire feuilleSalaire = null;
             Exception exception = null;
+
+            // création du modèle de l'action
+            IndexModel modèle = new IndexModel() { Application = application };
+
             try
             {
-                // création du modèle de l'action
-                IndexModel modèle = new IndexModel() { Application = application };
                 // récupération des valeurs postées dans ce modèle
                 TryUpdateModel(modèle, postedData);
                 // gestion des erreurs
@@ -44,6 +54,14 @@ namespace Pam.Controllers
 
             if (exception == null)
             {
+                // sessions utilisateur
+                session.Simulation = new Simulation()
+                {
+                    Num = session.NumNextSimulation,
+                    HeuresTravaillées = modèle.HeuresTravaillées,
+                    JoursTravaillés = Convert.ToInt32(modèle.JoursTravaillés),
+                    FeuilleSalaire = feuilleSalaire
+                };
                 // on affiche la feuille de salaire
                 return PartialView("Simulation", feuilleSalaire);
             }
@@ -55,27 +73,40 @@ namespace Pam.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult EnregistrerSimulation()
+        public PartialViewResult EnregistrerSimulation(SessionModel session)
         {
-            return PartialView("Simulations");
+            // on enregistre la dernière simulation faite dans la liste des simulations de la session
+            session.Simulations.Add(session.Simulation);
+            // on incrémente dans la session le n° de la prochaine simulation
+            session.NumNextSimulation++;
+            // on affiche la liste des simulations
+            return PartialView("Simulations", session.Simulations);
+        }
+        [HttpPost]
+        public PartialViewResult VoirSimulations(SessionModel session)
+        {
+            return PartialView("Simulations", session.Simulations);
         }
 
         [HttpPost]
-        public PartialViewResult VoirSimulations()
+        public PartialViewResult Formulaire(ApplicationModel application)
         {
-            return PartialView("Simulations");
+            return PartialView("Formulaire", new IndexModel() { Application = application });
         }
 
         [HttpPost]
-        public PartialViewResult Formulaire()
+        public PartialViewResult TerminerSession(ApplicationModel application)
         {
-            return PartialView("Formulaire");
+            // effacer les données de la session utilisateur
+            Session.Abandon();
+            return PartialView("Formulaire", new IndexModel() { Application = application });
         }
 
         [HttpPost]
-        public PartialViewResult TerminerSession()
+        public PartialViewResult RetirerSimulation(SessionModel session, int num)
         {
-            return PartialView("Formulaire");
+            session.Simulations.RemoveAt(num-1);
+            return PartialView("Simulations", session.Simulations);
         }
     }
 }

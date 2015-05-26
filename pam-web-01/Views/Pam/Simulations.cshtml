@@ -1,1 +1,86 @@
-﻿<h2>Simulations</h2>
+﻿@model IEnumerable<Simulation>
+
+@using Pam.Models
+
+@if (Model.Count() == 0)
+{
+    <h2>Votre liste de simulations est vide</h2>
+}
+@if (Model.Count() != 0)
+{
+    <h2>Liste des simulations</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <span><b>N°</b></span>
+                </td>
+                <td>
+                    <span><b>Nom</b></span>
+                </td>
+                <td>
+                    <span><b>Prénom</b></span>
+                </td>
+                <td>
+                    <span><b>Heures travaillées</b></span>
+                </td>
+                <td>
+                    <span><b>Jours travaillés</b></span>
+                </td>
+                <td>
+                    <span><b>Salaire de base</b></span>
+                </td>
+                <td>
+                    <span><b>Indemnités</b></span>
+                </td>
+                <td>
+                    <span><b>Cotisations sociales</b></span>
+                </td>
+                <td>
+                    <span><b>Salaire net</b></span>
+                </td>
+            </tr>
+            @foreach (var simulation in Model)
+            {
+                double indemnites = simulation.FeuilleSalaire.ElementsSalaire.IndemnitesEntretien + simulation.FeuilleSalaire.ElementsSalaire.IndemnitesRepas;
+                String typeLigne = "impair";
+                if ((simulation.Num % 2) == 0)
+                {
+                    typeLigne = "pair";
+                }
+                <tr class="@typeLigne">
+                    <td>
+                        <span>@simulation.Num</span>
+                    </td>
+                    <td>
+                        <span>@simulation.FeuilleSalaire.Employe.Nom</span>
+                    </td>
+                    <td>
+                        <span>@simulation.FeuilleSalaire.Employe.Prenom</span>
+                    </td>
+                    <td>
+                        <span>@simulation.HeuresTravaillées</span>
+                    </td>
+                    <td>
+                        <span>@simulation.JoursTravaillés</span>
+                    </td>
+                    <td>
+                        <span>@String.Format("{0:C2}", @simulation.FeuilleSalaire.ElementsSalaire.SalaireBase)</span>
+                    </td>
+                    <td>
+                        <span> @String.Format("{0:C2}", @indemnites)</span>
+                    </td>
+                    <td>
+                        <span>@String.Format("{0:C2}", @simulation.FeuilleSalaire.ElementsSalaire.CotisationsSociales)</span>
+                    </td>
+                    <td>
+                        <span>@String.Format("{0:C2}", @simulation.FeuilleSalaire.ElementsSalaire.SalaireNet)</span>
+                    </td>
+                    <td>
+                        <a href="javascript:retirerSimulation(@simulation.Num)">retirer</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

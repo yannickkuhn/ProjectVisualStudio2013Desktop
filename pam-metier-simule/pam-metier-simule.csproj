@@ -7,7 +7,7 @@
     <ProjectGuid>{96123ADD-1973-4A09-AA3F-66FBA4865D05}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pam</RootNamespace>
+    <RootNamespace>pam_metier_simule</RootNamespace>
     <AssemblyName>pam-metier-simule</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

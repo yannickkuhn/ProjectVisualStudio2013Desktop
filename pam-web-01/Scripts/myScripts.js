@@ -21,15 +21,12 @@ function faireSimulation() {
         success: function (data) {
             loading.hide();
             simulation.html(data);
+            simulation.show();
         },
         error: function (jqXHR) {
             // affichage erreur
             simulation.html(jqXHR.responseText);
             simulation.show();
-        },
-        complete: function () {
-            // signal d'attente éteint
-            loading.hide();
         }
     });
     // menu
@@ -37,11 +34,22 @@ function faireSimulation() {
 }
 function effacerSimulation() {
     // on efface les saisies du formulaire
+    var formulaire = $("#formulaire");
+
+    // Inputs du formulaire
+    var HeuresTravaillées = $('input[name="HeuresTravaillées"]');
+    var JoursTravaillés = $('input[name="JoursTravaillés"]');
+
+    formulaire.validate().form();
+
+    HeuresTravaillées.val("");
+    JoursTravaillés.val("");
 
     // on cache la div de simulation
     if(simulation != null)
         simulation.hide();
 
+    // menu
     setMenu([lnkFaireSimulation, lnkEffacerSimulation, lnkVoirSimulations, lnkTerminerSession]);
 }
 function enregistrerSimulation() {
@@ -82,7 +90,12 @@ function retourFormulaire() {
         success: function (data) {
             loading.hide();
             content.html(data);
+            simulation.show();
             setMenu([lnkFaireSimulation, lnkVoirSimulations, lnkTerminerSession]);
+        },
+        complete: function () {
+            // important : validation
+            $.validator.unobtrusive.parse($("#formulaire"));
         }
     })
 }
@@ -92,13 +105,38 @@ function terminerSession() {
         url: '/Pam/TerminerSession',
         type: 'POST',
         dataType: 'html',
-        begin: loading.show(),
+        beforeSend: function() {
+            loading.show();
+        },
         success: function (data) {
             loading.hide();
             content.html(data);
             setMenu([lnkFaireSimulation, lnkVoirSimulations, lnkTerminerSession]);
+        },
+        complete: function () {
+            // important : validation
+            $.validator.unobtrusive.parse($("#formulaire"));
         }
+
     })
+}
+function retirerSimulation(N) {
+    // on fait un appel Ajax à la main
+    $.ajax({
+        url: '/Pam/RetirerSimulation',
+        type: 'POST',
+        data: "num=" + N,
+        dataType: 'html',
+        beforeSend: function() {
+            loading.show();
+        },
+        success: function (data) {
+            loading.hide();
+            content.html(data);
+        }
+    });
+    // menu
+    setMenu([lnkRetourFormulaire, lnkTerminerSession]);
 }
 
 // variables globales
