@@ -45,11 +45,11 @@ namespace Pam
             ApplicationModel application = new ApplicationModel();
             Application["data"] = application;
             // instanciation couche [métier] - utilisation de Spring FRAMEWORK (amélioration)
-            /*application.InitException = null;
+            application.InitException = null;
             try
             {
                 // instanciation couche [métier]
-                application.PamMetier = ContextRegistry.GetContext().GetObject("pammetier") as PamMetier;
+                application.PamMetier = (IPamMetier)ContextRegistry.GetContext().GetObject("pammetier");
             }
             catch (Exception ex)
             {
@@ -57,24 +57,24 @@ namespace Pam
             }
             //si pas d'erreur
             if (application.InitException == null)
-            { }*/
-
-            application.PamMetier = new PamMetier();
-
-            // tableau des employés
-            application.Employes = application.PamMetier.GetAllIdentitesEmployes();
-            // éléments du combo des employés
-
-            // transformation du tableau d'employés en liste déroulante
-            SelectListItem[] listEmployes = new SelectListItem[application.Employes.Length];
-            for (int i = 0; i < application.Employes.Length; i++)
             {
-                Employe iEmploye = application.Employes[i];
-                listEmployes[i] = new SelectListItem() { Text = iEmploye.Prenom + " " + iEmploye.Nom, Value = iEmploye.SS };
+
+                application.PamMetier = new PamMetier();
+
+                // tableau des employés
+                application.Employes = application.PamMetier.GetAllIdentitesEmployes();
+                // éléments du combo des employés
+
+                // transformation du tableau d'employés en liste déroulante
+                SelectListItem[] listEmployes = new SelectListItem[application.Employes.Length];
+                for (int i = 0; i < application.Employes.Length; i++)
+                {
+                    Employe iEmploye = application.Employes[i];
+                    listEmployes[i] = new SelectListItem() { Text = iEmploye.Prenom + " " + iEmploye.Nom, Value = iEmploye.SS };
+                }
+                application.EmployesItems = listEmployes;
+
             }
-            application.EmployesItems = listEmployes;
-            
-            
 
             // model binders pour [ApplicationModel et SessionModel]
             ModelBinders.Binders.Add(typeof(ApplicationModel), new ApplicationModelBinder());

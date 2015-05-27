@@ -16,11 +16,11 @@ namespace Pam.Controllers
         public ViewResult Index(ApplicationModel application)
         {
             // erreur d'initialisation ?
-            //if (application.InitException != null)
-            //{
+            if (application.InitException != null)
+            {
                 // page d'erreurs sans menu
-            //    return View("InitFailed", Static.GetErreursForException(application.InitException));
-            //}
+                return View("InitFailed", Static.GetErreursForException(application.InitException));
+            }
             // pas d'erreur
             return View(new IndexModel() { Application = application });
         }
