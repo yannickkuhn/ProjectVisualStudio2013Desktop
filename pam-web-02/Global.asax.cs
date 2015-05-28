@@ -12,7 +12,9 @@ using Pam.Metier.Service;
 using Pam.Infrastructure;
 using Pam.Models;
 using System.Configuration;
+
 using Spring.Context.Support;
+using Pam.EF5.Entites;
 
 
 namespace Pam
@@ -54,9 +56,6 @@ namespace Pam
             //si pas d'erreur
             if (application.InitException == null)
             {
-
-                application.PamMetier = new PamMetier();
-
                 // tableau des employés
                 application.Employes = application.PamMetier.GetAllIdentitesEmployes();
                 // éléments du combo des employés

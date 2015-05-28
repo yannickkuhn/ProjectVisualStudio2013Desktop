@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{687E85F2-175B-425B-8229-F503AA2432E7}</ProjectGuid>
+    <ProjectGuid>{67DFA717-02C7-4760-852D-F97018DCE100}</ProjectGuid>
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pam</RootNamespace>
-    <AssemblyName>pam-web-01</AssemblyName>
+    <AssemblyName>pam-web-02</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -270,9 +270,17 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\pam-metier-simule\pam-metier-simule.csproj">
-      <Project>{96123add-1973-4a09-aa3f-66fba4865d05}</Project>
-      <Name>pam-metier-simule</Name>
+    <ProjectReference Include="..\pam-dao\pam-dao.csproj">
+      <Project>{7c172ec2-563b-4a97-bf04-23340ec074b8}</Project>
+      <Name>pam-dao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pam-ef5\pam-ef5.csproj">
+      <Project>{1d2b80a2-27cc-4a78-aec5-612d880c65a4}</Project>
+      <Name>pam-ef5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\pam-metier\pam-metier.csproj">
+      <Project>{46e12d09-5a07-4937-aee4-c16348548be2}</Project>
+      <Name>pam-metier</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
