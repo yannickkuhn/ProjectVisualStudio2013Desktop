@@ -16,18 +16,7 @@ namespace Pam.Metier.Service
         public Employe[] GetAllIdentitesEmployes()
         {
             Employe[] employes = null;
-            try
-            {
-                // instanciation couche [dao]
-                PamDao = (IPamDao)ContextRegistry.GetContext().GetObject("pamdao");
-                // liste des identités des employés
-                employes = PamDao.GetAllIdentitesEmployes();
-            }
-            catch (Exception ex)
-            {
-                // affichage exception
-                Console.WriteLine(ex.ToString());
-            }
+            employes = PamDao.GetAllIdentitesEmployes();
             return employes;
         }
 
@@ -35,18 +24,7 @@ namespace Pam.Metier.Service
         public Employe GetEmploye(string ss)
         {
             Employe employe = null;
-            try
-            {
-                // instanciation couche [dao]
-                PamDao = (IPamDao)ContextRegistry.GetContext().GetObject("pamdao");
-                // liste des identités des employés
-                employe = PamDao.GetEmploye(ss);
-            }
-            catch (Exception ex)
-            {
-                // affichage exception
-                Console.WriteLine(ex.ToString());
-            }
+            employe = PamDao.GetEmploye(ss);
             return employe;
         }
 
@@ -54,18 +32,7 @@ namespace Pam.Metier.Service
         public Cotisations GetCotisations()
         {
             Cotisations cotisations = null;
-            try
-            {
-                // instanciation couche [dao]
-                PamDao = (IPamDao)ContextRegistry.GetContext().GetObject("pamdao");
-                // liste des identités des employés
-                cotisations = PamDao.GetCotisations();
-            }
-            catch (Exception ex)
-            {
-                // affichage exception
-                Console.WriteLine(ex.ToString());
-            }
+            cotisations = PamDao.GetCotisations();
             return cotisations;
         }
 
@@ -96,8 +63,8 @@ namespace Pam.Metier.Service
                 ElementsSalaire = new ElementsSalaire()
                 {
                     CotisationsSociales = csociales,
-                    IndemnitesEntretien = indemnites,
-                    IndemnitesRepas = indemnites,
+                    IndemnitesEntretien = System.Math.Round(joursTravaillés * (e.Indemnites.EntretienJour), 2),
+                    IndemnitesRepas = System.Math.Round(joursTravaillés * (e.Indemnites.RepasJour), 2),
                     SalaireBase = sbase,
                     SalaireNet = snet
                 }

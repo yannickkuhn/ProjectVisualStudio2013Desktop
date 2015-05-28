@@ -54,8 +54,13 @@ namespace Pam.Dao.Service
             {
                 using (var context = new DbPamContext())
                 {
-                    // l'employé au numéro de SS passé en paramètre
-                    employe = context.Employes.Include("indemnites").Single<Employe>(c => c.SS == SS);
+                    // je vérifie d'abord que l'utilisateur existe en mémoire (plus rapide)
+                    foreach (Employe e in employes)
+                    {
+                        // l'employé au numéro de SS passé en paramètre
+                        if(e.SS == SS)
+                            employe = context.Employes.Include("indemnites").Single<Employe>(c => c.SS == SS);
+                    }
                 }
             }
             catch (Exception e)

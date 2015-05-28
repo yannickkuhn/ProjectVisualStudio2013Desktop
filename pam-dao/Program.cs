@@ -24,10 +24,10 @@ namespace Pam.Dao.Tests
                 Console.WriteLine(pamDao.GetEmploye("254104940426058"));
                 Console.WriteLine("------------------------------------");
                 // un employé qui n'existe pas
-                // Employe employe = pamDao.GetEmploye("xx");
-                // Console.WriteLine("Employé n° xx");
-                // Console.WriteLine((employe == null ? "null" : employe.ToString()));
-                // Console.WriteLine("------------------------------------");
+                Employe employe = pamDao.GetEmploye("xx");
+                Console.WriteLine("Employé n° xx");
+                Console.WriteLine((employe == null ? "null" : employe.ToString()));
+                Console.WriteLine("------------------------------------");
                 // liste des cotisations
                 Cotisations cotisations = pamDao.GetCotisations();
                 Console.WriteLine(cotisations.ToString());
