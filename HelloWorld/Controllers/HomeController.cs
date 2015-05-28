@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace HelloWorld.Controllers
 {
@@ -11,7 +12,11 @@ namespace HelloWorld.Controllers
     {
         //
         // GET: /Home/
-        public ActionResult Index(string id)
+        public string Index(string id)
+        {
+            return HtmlHelper.GenerateLink(Request.RequestContext, RouteTable.Routes, "Mon lien", null, "Index", "Home", new RouteValueDictionary { { "id", id } }, null);
+        }
+        /*public ActionResult Index(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return View("Error");
@@ -20,8 +25,9 @@ namespace HelloWorld.Controllers
                 ViewBag.Nom = id;
                 return View();
             }
-        }
+        }*/
 
+        // GET: /Home/ListeClients
         public ActionResult ListeClients()
         {
             Client clients = new Client();
@@ -29,6 +35,8 @@ namespace HelloWorld.Controllers
             return View();
         }
 
+        // GET: /Home/ChercheClient/Nicolas
+        // GET: /Home/ChercheClient/Marine
         public ActionResult ChercheClient(string id)
         {
             ViewData["Nom"] = id;
