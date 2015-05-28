@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListeClients</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Age</th>
+        </tr>
+        @foreach (HelloWorld.Models.Client client in ViewData["Clients"] as List<HelloWorld.Models.Client>)
+        {
+            <tr>
+                <td>@client.Nom</td>
+                <td>@client.Age</td>
+            </tr>
+        }
+    </table>
+</body>
